@@ -12,29 +12,22 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [theme, setTheme] = useState("light");
 
-  // 👇 Estado para simular navegación
   const [currentScreen, setCurrentScreen] = useState("home");
   const [selectedService, setSelectedService] = useState(null);
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
-
-  const themeStyles = {
-    light: { background: "#f9f9f9", color: "#333" },
-    dark: { background: "#1e1e1e", color: "#f9f9f9" },
-  };
 
   return (
     <div
       style={{
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "'Poppins', sans-serif",
         minHeight: "100vh",
-        ...themeStyles[theme],
+        background: "#121212",
+        color: "#f5f5f5",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
+      {/* Header */}
       <Header
         user={user}
         onLoginClick={() => {
@@ -47,20 +40,12 @@ function App() {
         }}
         onLogout={() => setUser(null)}
         onMenuClick={() => setSidebarOpen(true)}
-        theme={theme}
       />
 
-      <Sidebar
-        open={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        theme={theme}
-        toggleTheme={toggleTheme}
-      />
-
-      <div style={{ padding: "20px", maxWidth: "1000px", margin: "0 auto" }}>
+      {/* Contenido principal */}
+      <main style={{ flex: 1, padding: "40px 20px", maxWidth: "1200px", margin: "0 auto" }}>
         {currentScreen === "home" && (
           <Services
-            theme={theme}
             onSelectService={(service) => {
               setSelectedService(service);
               setCurrentScreen("subservices");
@@ -73,7 +58,6 @@ function App() {
             service={selectedService}
             user={user}
             onRequireLogin={() => setShowLogin(true)}
-            theme={theme}
             onBack={() => setCurrentScreen("home")}
           />
         )}
@@ -105,7 +89,20 @@ function App() {
             onClose={() => setShowRegister(false)}
           />
         )}
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer
+        style={{
+          background: "#1f1f1f",
+          padding: "20px",
+          textAlign: "center",
+          color: "#a0a0a0",
+          fontSize: "14px",
+        }}
+      >
+        No hay nombre © 2025
+      </footer>
     </div>
   );
 }
